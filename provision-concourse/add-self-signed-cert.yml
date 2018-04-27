@@ -1,0 +1,25 @@
+- type: replace
+  path: /variables?/name=concourse-ca?
+  value:
+    name: concourse-ca
+    type: certificate
+    options:
+      is_ca: true
+      common_name: Concourse CA
+- type: replace
+  path: /variables?/name=atc_tls?
+  value:
+    name: atc_tls
+    type: certificate
+    options:
+      ca: concourse-ca
+      common_name: ((web_ip))
+      alternative_names:
+      - ((web_ip))
+      - ((db_ip))
+      - 127.0.0.1
+
+# From https://github.com/pivotalservices/deploy-concourse/blob/master/ops-files/credhub-tls-cert-verify.yml
+#- type: replace
+#  path: /instance_groups/name=web/jobs/name=atc/properties/credhub/tls/insecure_skip_verify?
+#  value: ((skip_ssl_validation))

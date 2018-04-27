@@ -1,0 +1,6 @@
+- type: replace
+  path: /networks/name=default/subnets/0/static?
+  value: [10.193.163.16-10.193.163.29]
+- type: replace
+  path: /networks/name=default/subnets/0/reserved?
+  value: [10.193.163.1-10.193.163.15,10.193.163.100-10.193.163.255]
