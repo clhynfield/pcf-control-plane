@@ -23,6 +23,7 @@ bosh $bosh_command "$concourse_cluster/concourse.yml" \
   -o "add-self-signed-cert.yml" \
   -o 'generate-basic-auth-creds.yml' \
   -o "add-credhub.yml" \
+  -o 'pin-to-stemcell-v3468.yml' \
   --var web_ip=10.193.163.17 \
   --var db_ip=10.193.163.16 \
   --var external_url=https://10.193.163.17 \
