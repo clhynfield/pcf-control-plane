@@ -7,5 +7,5 @@ Download and install the following command-line utilities:
     - [bosh dependencies](http://bosh.io/docs/cli-v2-install/#additional-dependencies)
     - [credhub](https://github.com/cloudfoundry-incubator/credhub-cli/releases)
     - [fly](https://github.com/concourse/fly/releases)
-    - jq
+    - [jq](https://github.com/stedolan/jq/wiki/Installation)
 EOF
