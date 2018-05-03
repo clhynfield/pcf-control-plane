@@ -12,5 +12,5 @@ cp static-ips.yml "$BBL_STATE_DIRECTORY/cloud-config/"
 cp create-director-override.sh "$BBL_STATE_DIRECTORY/"
 cp create-jumpbox-override.sh "$BBL_STATE_DIRECTORY/"
 
-bbl up --iaas vsphere
+bbl up
 
