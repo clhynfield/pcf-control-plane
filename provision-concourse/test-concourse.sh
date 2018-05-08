@@ -49,3 +49,36 @@ build="$(
 fly --target test watch \
     --job simple/hello-world \
     --build "$build"
+
+
+secret="$(date +"%Y%m%d%H%M%S$$" | md5sum | awk '{print $1;}')"
+
+source ./target-concourse-credhub.sh
+
+credhub set \
+    --name '/concourse/main/creds/secret' \
+    --type 'value' \
+    --value "$secret"
+
+fly --target test set-pipeline \
+    --pipeline creds \
+    --config test-pipeline-creds.yml \
+    --non-interactive
+
+fly --target test unpause-pipeline \
+    --pipeline creds
+
+build="$(
+    fly --target test trigger-job \
+        --job creds/hello-secret \
+        --verbose \
+        2>&1 \
+        | grep job_name \
+        | jq --raw-output '.name'
+    )"
+
+fly --target test watch \
+    --job creds/hello-secret \
+    --build "$build" \
+    | grep "$secret"
+

@@ -14,6 +14,10 @@ else
   bosh_command="deploy -d concourse"
 fi
 
+if ! bosh stemcells --json | jq ".Tables[0].Rows[]|select(.version|startswith(\"3541.12\"))" | grep '3541.12'; then
+    bosh upload-stemcell https://s3.amazonaws.com/bosh-core-stemcells/vsphere/bosh-stemcell-3541.12-vsphere-esxi-ubuntu-trusty-go_agent.tgz
+fi
+
 bosh $bosh_command "$concourse_cluster/concourse.yml" \
   -l "$concourse_bosh_deployment/versions.yml" \
   -o "$concourse_cluster/operations/basic-auth.yml" \
@@ -23,7 +27,7 @@ bosh $bosh_command "$concourse_cluster/concourse.yml" \
   -o "add-self-signed-cert.yml" \
   -o 'generate-basic-auth-creds.yml' \
   -o "add-credhub.yml" \
-  -o 'pin-to-stemcell-v3468.yml' \
+  -o 'pin-to-stemcell-v3541.yml' \
   --var web_ip=10.193.163.17 \
   --var db_ip=10.193.163.16 \
   --var external_url=https://10.193.163.17 \
